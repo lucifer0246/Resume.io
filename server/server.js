@@ -4,7 +4,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
-import paymentRoutes from "./routes/paymentRoute.js";
+
 import resumeRoutes from "./routes/resumeRoutes.js";
 import publicResumeRoutes from "./routes/publicrRoute.js";
 
@@ -38,7 +38,6 @@ app.use(
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
-app.use("/api/payment", paymentRoutes);
 
 app.use("/public", publicResumeRoutes);
 
