@@ -39,7 +39,6 @@ const publicAPI = axios.create({
 });
 
 // ================= Auth API =================
-// ================= Auth API =================
 const authAPI = {
   register: (username, email, password) =>
     API.post("/api/auth/register", { username, email, password }),
