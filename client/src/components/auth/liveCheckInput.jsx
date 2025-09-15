@@ -36,7 +36,14 @@ export default function LiveCheckInput({
       value={value}
       onChange={onChange}
       placeholder={placeholder}
-      className="mt-1 w-full rounded-md border px-3 py-2 shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-black border-gray-300"
+      className="
+    mt-1 w-full rounded-md border px-3 py-2 shadow-sm
+    text-[var(--foreground)]
+    placeholder-[var(--muted-foreground)]
+    bg-[var(--input)]
+    border-[var(--border)]
+    focus:outline-none focus:ring-2 focus:ring-[var(--ring)] focus:border-[var(--primary)]
+  "
     />
   );
 }

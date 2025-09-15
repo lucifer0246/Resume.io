@@ -1,11 +1,23 @@
 import "./App.css";
 import AppRoutes from "./AppRoutes";
 import { Toaster } from "react-hot-toast";
-import { Skeleton } from "@/components/ui/skeleton";
+import { useEffect } from "react";
+import useThemeStore from "./store/themeStore";
 
 function App() {
+  const { theme } = useThemeStore();
+
+  // Sync Tailwind's dark mode class with Zustand theme
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [theme]);
+
   return (
-    <div className="flex flex-col overflow-hidden bg-white">
+    <div className="flex flex-col overflow-hidden bg-white ">
       <Toaster
         position="top-right"
         toastOptions={{

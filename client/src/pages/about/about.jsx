@@ -22,7 +22,7 @@ export default function About() {
   ];
 
   return (
-    <div className="h-screen overflow-hidden bg-gradient-to-b from-blue-50 to-white flex flex-col items-center justify-center p-6 space-y-12">
+    <div className="min-h-screen overflow-hidden bg-[var(--dashboard-bg)] flex flex-col items-center justify-center p-6 space-y-12">
       {/* Features Section */}
       <motion.div
         initial={{ opacity: 0 }}
@@ -34,13 +34,15 @@ export default function About() {
           <motion.div
             key={idx}
             whileHover={{ scale: 1.05 }}
-            className="bg-white p-4 md:p-6 rounded-2xl shadow-lg flex flex-col items-center text-center space-y-2 md:space-y-4"
+            className="bg-[var(--card-bg)] p-4 md:p-6 rounded-2xl shadow-lg flex flex-col items-center text-center space-y-2 md:space-y-4 transition-colors"
           >
-            <div className="text-blue-600">{feature.icon}</div>
-            <h3 className="text-lg md:text-xl font-semibold text-gray-800">
+            <div className="text-[var(--primary)]">{feature.icon}</div>
+            <h3 className="text-lg md:text-xl font-semibold text-[var(--foreground)]">
               {feature.title}
             </h3>
-            <p className="text-gray-500 text-xs md:text-sm">{feature.desc}</p>
+            <p className="text-[var(--muted-foreground)] text-xs md:text-sm">
+              {feature.desc}
+            </p>
           </motion.div>
         ))}
       </motion.div>
@@ -52,19 +54,19 @@ export default function About() {
         transition={{ duration: 0.6 }}
         className="max-w-4xl text-center space-y-4 md:space-y-6"
       >
-        <h2 className="text-xl md:text-2xl font-bold text-gray-800">
+        <h2 className="text-xl md:text-2xl font-bold text-[var(--foreground)]">
           Our Mission
         </h2>
-        <p className="text-gray-600 text-sm md:text-lg">
+        <p className="text-[var(--muted-foreground)] text-sm md:text-lg">
           We aim to simplify how professionals share and manage their resumes.
           Our platform ensures privacy, easy access, and smooth experience for
           both job seekers and employers.
         </p>
 
-        <h2 className="text-xl md:text-2xl font-bold text-gray-800 mt-4 md:mt-8">
+        <h2 className="text-xl md:text-2xl font-bold text-[var(--foreground)] mt-4 md:mt-8">
           The Team
         </h2>
-        <p className="text-gray-600 text-sm md:text-lg">
+        <p className="text-[var(--muted-foreground)] text-sm md:text-lg">
           Built by a passionate team of developers who love clean, intuitive,
           and functional design. Tools that actually help people succeed.
         </p>

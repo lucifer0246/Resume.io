@@ -4,7 +4,7 @@ import { toast } from "react-hot-toast";
 import { useDropzone } from "react-dropzone";
 //eslint-disable-next-line
 import { motion } from "framer-motion";
-import { resumeAPI } from "../../API/API"; // make sure you're using resumeAPI
+import { resumeAPI } from "../../API/API"; // ensure using resumeAPI
 import CheckoutButton from "../../components/dashboard/payment";
 
 export default function UploadPage() {
@@ -18,11 +18,11 @@ export default function UploadPage() {
         const percent = Math.round(
           (progressEvent.loaded * 100) / progressEvent.total
         );
-        setUploadProgress(percent); // update %
+        setUploadProgress(percent);
       }),
     onMutate: () => {
       setUploading(true);
-      setUploadProgress(0); // reset before new upload
+      setUploadProgress(0);
     },
     onSuccess: () => {
       toast.success("Resume uploaded successfully!");
@@ -33,7 +33,7 @@ export default function UploadPage() {
     },
     onSettled: () => {
       setUploading(false);
-      setUploadProgress(0); // reset after upload complete
+      setUploadProgress(0);
     },
   });
 
@@ -56,7 +56,7 @@ export default function UploadPage() {
   const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
     onDrop: handleUpload,
     multiple: false,
-    noClick: true, // prevent clicking the box from opening picker
+    noClick: true,
     noKeyboard: true,
     accept: {
       "application/pdf": [".pdf"],
@@ -66,18 +66,18 @@ export default function UploadPage() {
   });
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-6">
+    <div className="min-h-screen bg-[var(--dashboard-bg)] flex items-center justify-center p-6">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-8 space-y-8"
+        className="w-full max-w-3xl bg-[var(--dashboard-bg)]] text-[var(--card-foreground)] rounded-2xl shadow-lg p-8 space-y-8"
       >
         {/* Headline */}
-        <h1 className="text-4xl font-bold text-center text-gray-800">
+        <h1 className="text-4xl font-bold text-center text-[var(--foreground)]">
           Share Your Resume in Seconds
         </h1>
-        <p className="text-center text-gray-500">
+        <p className="text-center text-[var(--muted-foreground)]">
           Drag & drop your resume or click the button below to upload.
         </p>
 
@@ -90,14 +90,16 @@ export default function UploadPage() {
           ].map((step, i) => (
             <motion.div
               key={i}
-              className="flex flex-col items-center p-4 bg-gray-50 rounded-xl shadow-sm"
+              className="flex flex-col items-center p-4 rounded-xl shadow-sm bg-[var(--dashboard-bg)]] border border-[var(--border)]"
               whileHover={{ scale: 1.05 }}
             >
-              <div className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-600 text-white font-bold mb-2">
+              <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[var(--primary)] text-[var(--primary-foreground)] font-bold mb-2">
                 {i + 1}
               </div>
-              <h3 className="font-semibold text-gray-800">{step.title}</h3>
-              <p className="text-sm text-gray-500 text-center mt-1">
+              <h3 className="font-semibold text-[var(--foreground)]">
+                {step.title}
+              </h3>
+              <p className="text-sm text-[var(--muted-foreground)] text-center mt-1">
                 {step.desc}
               </p>
             </motion.div>
@@ -105,7 +107,7 @@ export default function UploadPage() {
         </div>
 
         {/* File restriction note */}
-        <p className="text-center text-sm text-gray-400">
+        <p className="text-center text-sm text-[var(--muted-foreground)]">
           Accepted formats: PDF or DOCX. Maximum file size: 5MB.
         </p>
 
@@ -113,41 +115,52 @@ export default function UploadPage() {
         <div
           {...getRootProps()}
           className={`border-2 border-dashed rounded-xl p-12 text-center transition-colors duration-300
-    ${isDragActive ? "border-blue-500 bg-blue-50" : "border-gray-300 bg-white"}
-    ${uploading ? "opacity-80" : "cursor-pointer"}
-  `}
+            ${
+              isDragActive
+                ? "border-[var(--primary)] bg-[var(--primary)/10]"
+                : "border-[var(--border)] bg-[var(--dashboard-bg)]"
+            }
+            ${uploading ? "opacity-80" : "cursor-pointer"}
+          `}
         >
           <input {...getInputProps()} />
 
           {uploading ? (
             <div className="space-y-2">
-              <p>Uploading... {uploadProgress}%</p>
-              <div className="w-full bg-gray-200 rounded-full h-2">
+              <p className="text-[var(--foreground)]">
+                Uploading... {uploadProgress}%
+              </p>
+              <div className="w-full bg-[var(--muted)] rounded-full h-2">
                 <div
-                  className="bg-blue-600 h-2 rounded-full transition-all"
+                  className="bg-[var(--primary)] h-2 rounded-full transition-all"
                   style={{ width: `${uploadProgress}%` }}
                 />
               </div>
             </div>
           ) : (
-            "Drag & drop your resume here, or click the button below"
+            <p className="text-[var(--muted-foreground)]">
+              Drag & drop your resume here, or click the button below
+            </p>
           )}
         </div>
 
-        {/* Upload button → only opens picker */}
+        {/* Upload button → opens picker */}
         <button
           type="button"
           onClick={open}
           disabled={uploading}
-          className="w-1/2 mx-auto block py-3 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 transition-colors disabled:opacity-50"
+          className="w-1/2 mx-auto block py-3 rounded-xl font-medium
+            bg-[var(--primary)] text-[var(--primary-foreground)]
+            hover:bg-[var(--primary)/90] transition-colors disabled:opacity-50"
         >
           {uploading ? "Uploading..." : "Choose Resume"}
         </button>
 
+        {/* Checkout / payment */}
         <CheckoutButton />
 
         {/* Footer encouragement */}
-        <p className="text-center text-gray-500 text-sm">
+        <p className="text-center text-[var(--muted-foreground)] text-sm">
           You can upload multiple resumes and choose your active one anytime.
           <br />
           Your files remain private until you share them.

@@ -19,10 +19,7 @@ export default function UploadResume() {
     }
   };
 
-  const handlePreview = (resume) => {
-    setPreviewResume(resume); // open modal
-  };
-
+  const handlePreview = (resume) => setPreviewResume(resume);
   const handleDelete = async (resume) => {
     try {
       await resumeAPI.deleteResume(resume._id);
@@ -35,25 +32,28 @@ export default function UploadResume() {
   const closePreview = () => setPreviewResume(null);
 
   // ------------------- Render -------------------
-  if (isLoading) return <p className="p-6">Loading resumes...</p>;
+  if (isLoading)
+    return (
+      <p className="p-6 text-[var(--muted-foreground)]">Loading resumes...</p>
+    );
   if (isError)
     return <p className="p-6 text-red-500">Failed to load resumes.</p>;
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="space-y-6 p-6 bg-[var(--dashboard-bg)] min-h-screen">
       {/* Header */}
       <div className="space-y-2 flex flex-col items-center">
-        <h1 className="text-3xl font-bold text-gray-800">
+        <h1 className="text-3xl font-bold text-[var(--foreground)]">
           Your Uploaded Resumes
         </h1>
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-[var(--muted-foreground)] text-center">
           Manage your resumes. Set one as active, preview, or delete.
         </p>
       </div>
 
       {/* Resume Tiles */}
       {resumes.length === 0 ? (
-        <p className="text-gray-400 text-center mt-6">
+        <p className="text-[var(--muted-foreground)] text-center mt-6">
           No resumes uploaded yet. Upload one to get started!
         </p>
       ) : (
@@ -73,21 +73,25 @@ export default function UploadResume() {
       {/* Preview Modal */}
       {previewResume && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70"
-          onClick={closePreview} // ✅ Close on outside click
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm"
+          onClick={closePreview}
         >
-          <div
-            className="bg-white rounded-lg shadow-lg w-11/12 md:w-3/4 lg:w-1/2 h-[80vh] flex flex-col"
-            onClick={(e) => e.stopPropagation()} // ✅ Prevent closing when clicking inside modal
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.2 }}
+            className="bg-[var(--card)] rounded-lg shadow-xl w-11/12 md:w-3/4 lg:w-1/2 h-[80vh] flex flex-col overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
           >
-            {/* Header */}
-            <div className="flex justify-between items-center p-4 border-b">
-              <h2 className="text-lg font-semibold">
+            {/* Modal Header */}
+            <div className="flex justify-between items-center p-4 border-b border-[var(--border)]">
+              <h2 className="text-lg font-semibold text-[var(--foreground)]">
                 Preview – {previewResume.originalName}
               </h2>
               <button
                 onClick={closePreview}
-                className="text-gray-500 hover:text-gray-700"
+                className="text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors"
               >
                 ✕
               </button>
@@ -98,11 +102,11 @@ export default function UploadResume() {
               <iframe
                 src={previewResume.url}
                 title="Resume Preview"
-                className="w-full h-full"
+                className="w-full h-full bg-[var(--card)]"
                 style={{ border: "none" }}
               ></iframe>
             </div>
-          </div>
+          </motion.div>
         </div>
       )}
     </div>

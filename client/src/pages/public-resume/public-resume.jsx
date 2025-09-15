@@ -27,18 +27,21 @@ export default function PublicResume() {
   }, [username]);
 
   if (loading)
-    return <p className="text-center mt-10 text-gray-500">Loading resume...</p>;
+    return (
+      <p className="text-center mt-10 text-[var(--muted-foreground)]">
+        Loading resume...
+      </p>
+    );
   if (error) return <p className="text-center mt-10 text-red-500">{error}</p>;
   if (!resume) return null;
 
   return (
-    <div className="flex flex-col lg:flex-row min-h-screen ">
+    <div className="flex flex-col lg:flex-row min-h-screen bg-[var(--dashboard-bg)]">
       {/* Left: Resume Card */}
-      <div className="w-full lg:w-2/3 flex justify-center lg:items-center">
+      <div className="w-full lg:w-2/3 flex justify-center lg:items-center p-6">
         <PublicResumeCard resume={resume} />
       </div>
 
-      {/* Right: Promotion */}
       {/* Right: Promotion */}
       <div className="w-full lg:w-1/3 h-screen bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-l-2xl shadow-lg p-10 flex flex-col justify-center">
         <h2 className="text-3xl font-bold mb-4 text-center lg:text-left">

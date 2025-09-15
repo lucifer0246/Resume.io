@@ -7,32 +7,43 @@ import authAPI from "../../API/API";
 export default function SettingsPage() {
   const { user } = useAuthStore();
 
-  // Slug state
-  const [slug, setSlug] = useState("abcd");
+  // ---------------- Slug State ----------------
+  const [slug, setSlug] = useState("");
   const [isEditingUrl, setIsEditingUrl] = useState(false);
+  const [hasResume, setHasResume] = useState(false);
 
-  // ---------------- Helper: Get Active Slug ----------------
   const fetchSlugFromResumes = async () => {
     try {
-      const res = await resumeAPI.getUserResumes(); // GET /resume/
-      const resumes = res.data; // array of resumes
-      const anyResume = resumes[0]; // just grab first (all share same slug)
-      const resumeSlug = anyResume?.slug || "abcd";
-      setSlug(resumeSlug);
+      const res = await resumeAPI.getUserResumes();
+      const resumes = res.data;
+
+      if (!resumes || resumes.length === 0) {
+        setHasResume(false);
+        setSlug("");
+        return;
+      }
+
+      setHasResume(true);
+      const activeResume = resumes.find((r) => r.isActive) || resumes[0];
+      setSlug(activeResume?.slug || "");
     } catch (err) {
       console.error("Failed to fetch resumes:", err);
       toast.error("Failed to fetch resumes");
-      setSlug("abcd");
+      setHasResume(false);
+      setSlug("");
     }
   };
 
-  // ---------------- Auto-fetch active slug on mount ----------------
   useEffect(() => {
     fetchSlugFromResumes();
   }, []);
 
-  // ---------------- Save Resume Slug ----------------
   const handleSaveUrl = async () => {
+    if (!hasResume) {
+      toast.error("Upload a resume first!");
+      return;
+    }
+
     const trimmedSlug = slug.trim();
     if (!trimmedSlug) {
       toast.error("Slug cannot be empty");
@@ -42,7 +53,6 @@ export default function SettingsPage() {
     try {
       await resumeAPI.updateActiveSlug(trimmedSlug);
       toast.success("Resume URL updated!");
-      // fetch latest active slug after update
       await fetchSlugFromResumes();
       setIsEditingUrl(false);
     } catch (err) {
@@ -50,7 +60,7 @@ export default function SettingsPage() {
     }
   };
 
-  // ---------------- Password Section (untouched) ----------------
+  // ---------------- Password State ----------------
   const [showPasswordForm, setShowPasswordForm] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -81,35 +91,37 @@ export default function SettingsPage() {
 
   return (
     <div
-      className="bg-background flex flex-col items-center p-6 overflow-hidden"
+      className="bg-[var(--dashboard-bg)] flex flex-col items-center p-6 overflow-hidden"
       style={{ height: "calc(100vh - 64px)" }}
     >
-      <div className="w-full max-w-2xl bg-white rounded-2xl shadow-md p-8 space-y-8 overflow-auto">
+      <div className="w-full max-w-2xl bg-[var(--dashboard-bg)] text-[var(--card-foreground)] rounded-2xl shadow-md p-8 space-y-8 overflow-auto">
+        {/* Header */}
         <div className="text-center">
-          <h1 className="text-3xl font-bold text-gray-800">Settings</h1>
-          <p className="text-gray-500">Manage your account</p>
+          <h1 className="text-3xl font-bold">Settings</h1>
+          <p className="text-[var(--muted-foreground)]">Manage your account</p>
         </div>
 
         {/* User info */}
         <div className="space-y-3">
-          <p className="text-gray-700">
+          <p>
             <strong>Username:</strong> {user?.username || "N/A"}
           </p>
-          <p className="text-gray-700">
+          <p>
             <strong>Email:</strong> {user?.email || "N/A"}
           </p>
         </div>
 
         {/* Resume slug */}
         <div className="space-y-3">
-          <h2 className="text-lg font-semibold text-gray-800">
-            Active Resume URL
-          </h2>
-          {isEditingUrl ? (
+          <h2 className="text-lg font-semibold">Active Resume URL</h2>
+
+          {!hasResume ? (
+            <p className="text-red-500">
+              No resumes uploaded yet. Please upload a resume first.
+            </p>
+          ) : isEditingUrl ? (
             <div className="flex gap-2 items-center">
-              <span className="text-gray-700">
-                myresume.io/{user?.username}/
-              </span>
+              <span>myresume.io/{user?.username}/</span>
               <input
                 type="text"
                 value={slug}
@@ -136,7 +148,7 @@ export default function SettingsPage() {
             </div>
           ) : (
             <div className="flex justify-between items-center">
-              <p className="text-gray-700">
+              <p>
                 myresume.io/{user?.username}/{slug}
               </p>
               <button
@@ -149,14 +161,12 @@ export default function SettingsPage() {
           )}
         </div>
 
-        {/* Password section (unchanged) */}
+        {/* Password section */}
         <div className="space-y-3">
-          <h2 className="text-lg font-semibold text-gray-800">
-            Security Settings
-          </h2>
+          <h2 className="text-lg font-semibold">Security Settings</h2>
           <button
             onClick={() => setShowPasswordForm(!showPasswordForm)}
-            className="w-full py-3 bg-gray-100 rounded-md hover:bg-gray-200 transition"
+            className="w-full py-3 bg-gray-100 rounded-md hover:bg-gray-200 text-gray-800 transition"
           >
             {showPasswordForm ? "Hide Change Password" : "Change Password"}
           </button>
@@ -164,7 +174,7 @@ export default function SettingsPage() {
           {showPasswordForm && (
             <form onSubmit={handlePasswordChange} className="space-y-3 mt-3">
               <div>
-                <label className="block text-sm font-medium text-gray-700">
+                <label className="block text-sm font-medium">
                   Current Password
                 </label>
                 <input
@@ -176,7 +186,7 @@ export default function SettingsPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">
+                <label className="block text-sm font-medium">
                   New Password
                 </label>
                 <input
@@ -188,7 +198,7 @@ export default function SettingsPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">
+                <label className="block text-sm font-medium">
                   Confirm New Password
                 </label>
                 <input

@@ -24,7 +24,6 @@ function AuthRegister() {
     try {
       await authAPI.register(data.username, data.email, data.password);
 
-      // fetch user after cookie is set
       const me = await authAPI.checkAuth();
       setAuth({ user: me.data.user, token: null });
 
@@ -40,7 +39,12 @@ function AuthRegister() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="space-y-4 max-w-md mx-auto bg-white p-6 rounded-lg shadow-md"
+      className="
+    space-y-4 max-w-md mx-auto 
+    bg-[var(--card)]/60 backdrop-blur-lg
+    text-[var(--card-foreground)]
+    p-6 rounded-xl shadow-lg border border-[var(--border)]
+  "
     >
       <h2 className="text-4xl font-bold text-center mb-4">
         Create Your Account
@@ -48,9 +52,7 @@ function AuthRegister() {
 
       {/* Username */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Username
-        </label>
+        <label className="block text-sm font-medium mb-1">Username</label>
         <Controller
           name="username"
           control={control}
@@ -68,6 +70,7 @@ function AuthRegister() {
               checkType="register"
               setValid={setUsernameValid}
               active={!user}
+              className="bg-[var(--input)] text-[var(--foreground)] border border-[var(--border)]"
             />
           )}
         />
@@ -78,9 +81,7 @@ function AuthRegister() {
 
       {/* Email */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Email
-        </label>
+        <label className="block text-sm font-medium mb-1">Email</label>
         <Controller
           name="email"
           control={control}
@@ -98,6 +99,7 @@ function AuthRegister() {
               checkType="register"
               setValid={setEmailValid}
               active={!user}
+              className="bg-[var(--input)] text-[var(--foreground)] border border-[var(--border)]"
             />
           )}
         />
@@ -108,9 +110,7 @@ function AuthRegister() {
 
       {/* Password */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Password
-        </label>
+        <label className="block text-sm font-medium mb-1">Password</label>
         <Controller
           name="password"
           control={control}
@@ -121,7 +121,13 @@ function AuthRegister() {
               type="password"
               placeholder="Enter password"
               {...field}
-              className="mt-1 w-full rounded-md border px-3 py-2 shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-black"
+              className="
+                mt-1 w-full rounded-md border px-3 py-2 shadow-sm
+                bg-[var(--input)] text-[var(--foreground)] border-[var(--border)]
+                placeholder-[var(--muted-foreground)]
+                focus:outline-none focus:ring-2 focus:ring-[var(--ring)] focus:border-[var(--primary)]
+              "
+              style={{ color: "var(--foreground)" }}
             />
           )}
         />
@@ -129,7 +135,7 @@ function AuthRegister() {
 
       {/* Confirm Password */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+        <label className="block text-sm font-medium mb-1">
           Confirm Password
         </label>
         <Controller
@@ -145,11 +151,18 @@ function AuthRegister() {
               type="password"
               placeholder="Confirm password"
               {...field}
-              className={`mt-1 w-full rounded-md border px-3 py-2 shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-black ${
-                confirmPassword && confirmPassword !== password
-                  ? "border-red-500"
-                  : "border-gray-300"
-              }`}
+              className={`
+                mt-1 w-full rounded-md border px-3 py-2 shadow-sm
+                bg-[var(--input)] text-[var(--foreground)] border-[var(--border)]
+                placeholder-[var(--muted-foreground)]
+                focus:outline-none focus:ring-2 focus:ring-[var(--ring)] focus:border-[var(--primary)]
+                ${
+                  confirmPassword && confirmPassword !== password
+                    ? "border-red-500"
+                    : ""
+                }
+              `}
+              style={{ color: "var(--foreground)" }}
             />
           )}
         />
@@ -160,12 +173,15 @@ function AuthRegister() {
 
       <button
         type="submit"
-        className="w-full rounded-md px-4 py-2 text-white font-medium bg-blue-600 hover:bg-blue-700"
+        className="
+          w-full rounded-md px-4 py-2 text-white font-medium
+          bg-blue-600 hover:bg-blue-700 transition-colors
+        "
       >
         Register
       </button>
 
-      <p className="text-sm text-gray-600 mt-2 text-center">
+      <p className="text-sm mt-2 text-center">
         Already have an account?
         <Link to="/login" className="text-blue-600 hover:underline ml-1">
           Login
