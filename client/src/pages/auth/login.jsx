@@ -27,10 +27,10 @@ function AuthLogin() {
       const me = await authAPI.checkAuth();
       setAuth({ user: me.data.user, token: null });
 
-      toast.success("Logged in successfully!", {
-        duration: 2000,
-        onClose: () => navigate("/dashboard"),
-      });
+      toast.success("Logged in successfully!", { duration: 2000 });
+
+      // Navigate immediately after login
+      navigate("/dashboard");
     } catch (err) {
       toast.error(
         err.response?.data?.error || "Email or password does not match!"
@@ -118,7 +118,7 @@ function AuthLogin() {
         type="submit"
         className="
           w-full rounded-md px-4 py-2 text-white font-medium
-          bg-blue-600 hover:bg-blue-700 transition-colors
+          bg-[var(--primary)] hover:bg-blue-700 transition-colors
         "
       >
         Login

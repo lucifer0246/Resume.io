@@ -127,7 +127,7 @@ function AuthRegister() {
                 );
               }
             }}
-            className={`text-sm font-medium cursor-pointer ml-2 pt-1 ${
+            className={`text-sm font-medium cursor-pointer self-end pb-[10px] ${
               isVerified && email === emailForOtp
                 ? "text-green-500 cursor-default"
                 : "text-blue-600 hover:underline"
@@ -199,7 +199,7 @@ function AuthRegister() {
           className={`w-full rounded-md px-4 py-2 text-white font-medium ${
             canSubmit
               ? "bg-blue-600 hover:bg-blue-700"
-              : "bg-gray-600 hover:bg-gray-700"
+              : "bg-[var(--primary)] hover:bg-[var(--destructive)] cursor-not-allowed"
           } transition-colors`}
         >
           Register
