@@ -43,7 +43,7 @@ export default function PublicResume() {
       </div>
 
       {/* Right: Promotion */}
-      <div className="w-full lg:w-1/3 h-screen bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-l-2xl shadow-lg p-10 flex flex-col justify-center">
+      <div className="w-full lg:w-1/3 h-screen bg-[var(--primary)] text-white rounded-l-2xl shadow-lg p-10 flex flex-col justify-center">
         <h2 className="text-3xl font-bold mb-4 text-center lg:text-left">
           Discover More at MyResume.io
         </h2>
