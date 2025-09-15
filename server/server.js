@@ -7,6 +7,7 @@ import authRoutes from "./routes/authRoutes.js";
 
 import resumeRoutes from "./routes/resumeRoutes.js";
 import publicResumeRoutes from "./routes/publicrRoute.js";
+import otpRoutes from "./routes/otpRoutes.js";
 
 dotenv.config();
 
@@ -42,6 +43,8 @@ app.use("/api/auth", authRoutes);
 app.use("/public", publicResumeRoutes);
 
 app.use("/resume", resumeRoutes);
+
+app.use("/api/otp", otpRoutes);
 
 // Routes
 app.get("/", (req, res) => {

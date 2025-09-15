@@ -36,6 +36,7 @@ export const registerUser = async (req, res) => {
       username,
       email,
       password: hashedPassword,
+      isVerified: true,
     });
 
     const token = generateToken(newUser._id);
@@ -48,6 +49,7 @@ export const registerUser = async (req, res) => {
         id: newUser._id,
         username: newUser.username,
         email: newUser.email,
+        isVerified: newUser.isVerified,
       },
     });
   } catch (error) {

@@ -55,6 +55,11 @@ const authAPI = {
   // ---------- Change Password ----------
   changePassword: (currentPassword, newPassword) =>
     API.put("/api/auth/change-password", { currentPassword, newPassword }),
+
+  //---------------otp ----------------
+  sendOtp: (email) => API.post("/api/otp/send", { email }),
+  verifyOtp: (email, otp) => API.post("/api/otp/verify", { email, otp }),
+  resendOtp: (email) => API.post("/api/otp/resend", { email }),
 };
 
 const resumeAPI = {

@@ -151,7 +151,7 @@ export default function UploadPage() {
           disabled={uploading}
           className="w-1/2 mx-auto block py-3 rounded-xl font-medium
             bg-[var(--primary)] text-[var(--primary-foreground)]
-            hover:bg-[var(--primary)/90] transition-colors disabled:opacity-50"
+            hover:bg-gray-300 transition-colors disabled:opacity-50"
         >
           {uploading ? "Uploading..." : "Choose Resume"}
         </button>
