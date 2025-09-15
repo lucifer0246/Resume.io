@@ -26,7 +26,7 @@ function MenuItems({ vertical = false, onLinkClick }) {
               className={`no-underline transition-colors ${
                 isActive
                   ? "text-blue-600 font-semibold"
-                  : "text-foreground hover:text-blue-600"
+                  : "text-foreground hover:text-[var(--primary)]"
               }`}
             >
               {label}

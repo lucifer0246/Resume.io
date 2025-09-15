@@ -157,7 +157,7 @@ export default function UploadPage() {
         </button>
 
         {/* Checkout / payment */}
-        <CheckoutButton />
+        {/* <CheckoutButton /> */}
 
         {/* Footer encouragement */}
         <p className="text-center text-[var(--muted-foreground)] text-sm">
