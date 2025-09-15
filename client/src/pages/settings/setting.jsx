@@ -134,7 +134,7 @@ export default function SettingsPage() {
                 className={`px-4 py-2 rounded-md transition ${
                   !slug.trim()
                     ? "bg-gray-300 text-gray-700 cursor-not-allowed"
-                    : "bg-blue-600 text-white hover:bg-blue-700"
+                    : "bg-[var(--primary)] text-white hover:bg-blue-700"
                 }`}
               >
                 Save
@@ -153,7 +153,7 @@ export default function SettingsPage() {
               </p>
               <button
                 onClick={() => setIsEditingUrl(true)}
-                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+                className="px-4 py-2 bg-[var(--primary)] text-white rounded-md hover:bg-blue-700 transition"
               >
                 Edit
               </button>
@@ -212,7 +212,7 @@ export default function SettingsPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition disabled:opacity-50"
+                className="w-full py-3 bg-[var(--primary)] text-white rounded-md hover:bg-blue-700 transition disabled:opacity-50"
               >
                 {loading ? "Updating..." : "Update Password"}
               </button>
