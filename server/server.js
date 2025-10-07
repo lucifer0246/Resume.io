@@ -22,7 +22,7 @@ app.use(cookieParser());
 // CORS setup
 app.use(
   cors({
-    origin: true,
+    origin: "https://resume-io-3.onrender.com",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
     allowedHeaders: [
