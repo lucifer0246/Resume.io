@@ -1,0 +1,150 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+@layer base, components, utilities;
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+/* -------------------- Light Mode -------------------- */
+:root {
+  --radius: 0.625rem;
+
+  --background: oklch(0.98 0 0);         /* Clean white */
+  --foreground: oklch(0.12 0 0);         /* Dark gray text */
+  --card: oklch(0.99 0 0);               /* Soft white card */
+  --card-foreground: oklch(0.12 0 0);
+  --popover: oklch(0.99 0 0);
+  --popover-foreground: oklch(0.12 0 0);
+  --bg-left: oklch(47.783% 0.16425 258.528); /* soft bluish tint */
+
+  --primary: oklch(0.5 0.06 210);        /* Modern blue */
+  --primary-foreground: oklch(0.99 0 0);
+
+  --secondary: oklch(0.88 0.04 90);      /* Fresh green */
+  --secondary-foreground: oklch(0.12 0 0);
+
+  --muted: oklch(0.93 0.02 100);         /* Soft grayish */
+  --muted-foreground: oklch(0.5 0 0);
+
+  --accent: oklch(0.9 0.06 320);         /* Vibrant pink */
+  --accent-foreground: oklch(0.99 0 0);
+
+  --destructive: oklch(0.7 0.18 28);     /* Red alert */
+  --border: oklch(0.85 0 0.05);
+  --input: oklch(0.97 0.01 0);
+  --ring: oklch(0.7 0.05 210);
+
+  --sidebar: oklch(0.99 0 0);
+  --sidebar-foreground: oklch(0.12 0 0);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+  --navbar-background: oklch(100% 0.005 271 / 0.8);
+  --dashboard-bg: oklch(0.98 0 0);
+
+}
+
+/* -------------------- Dark Mode -------------------- */
+.dark {
+  --background: oklch(0.18 0 0);         /* Dark gray background */
+  --foreground: oklch(0.95 0 0);         /* Light text */
+  --card: oklch(18.22% 0.00002 271.152 / 0.796);            /* Slightly lighter 
+  
+  card */
+  --bg-left: rgb(11, 28, 67)
+  ; /* dark bluish tint */
+  --card-foreground: oklch(0.95 0 0);
+  --popover: oklch(67.08% 0.00588 16.59);
+  --popover-foreground: oklch(0.95 0 0);
+
+  --primary: oklch(0.55 0.06 210);       /* Blue accent */
+  --primary-foreground: oklch(0.95 0 0);
+
+  --secondary: oklch(0.36 0.04 90);      /* Soft green */
+  --secondary-foreground: oklch(0.95 0 0);
+
+  --muted: oklch(30.882% 0.00173 106.816);
+  --muted-foreground: oklch(0.7 0 0);
+
+  --accent: oklch(0.36 0.06 320);
+  --accent-foreground: oklch(0.95 0 0);
+
+  --destructive: oklch(0.7 0.18 28);
+  --border: oklch(0.5 0 0.05 / 50%);
+  --input: oklch(23.185% 0.00153 16.319);
+  --ring: oklch(0.6 0.02 210);
+
+
+  --sidebar: oklch(0.18 0 0);
+  --sidebar-foreground: oklch(0.95 0 0);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+
+  --navbar-background: oklch(0% 0 0 / 0.655);
+  --dashboard-bg: oklch(18.22% 0.00002 271.152 / 0.879);
+}
+
+/* -------------------- Base Styles -------------------- */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  input, textarea, select {
+    color: var(--foreground);
+    background-color: var(--input);
+    border-color: var(--border);
+    caret-color: var(--foreground);
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--muted-foreground);
+  }
+
+  button {
+    color: var(--foreground);
+  }
+}
